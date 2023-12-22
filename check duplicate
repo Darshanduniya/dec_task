@@ -1,0 +1,27 @@
+import os
+
+def check_file_for_data_and_duplicates(path):
+    # Check if the file exists
+    if os.path.isfile(path):
+        # Check if the file is empty
+        if os.path.getsize(path) == 0:
+            print("There is no data in the file.")
+        else:
+            # Read the file and check for duplicates
+            seen_lines = set()
+            with open(path, 'r') as file:
+                for line in file:
+                    # Remove leading and trailing whitespaces and newlines
+                    clean_line = line.strip()
+                    if clean_line in seen_lines:
+                        print(f"Duplicate row found: '{clean_line}'")
+                        return
+                    else:
+                        seen_lines.add(clean_line)
+            print("File does not have duplicate values.")
+    else:
+        print("File not found at the specified path.")
+
+# Example usage:
+path_to_file = "/data/darshan.dat"  # Replace with the actual path to your file
+check_file_for_data_and_duplicates(path_to_file)
