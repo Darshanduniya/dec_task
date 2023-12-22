@@ -5,19 +5,24 @@ def check_file_for_data_and_duplicates(path):
     if os.path.isfile(path):
         # Check if the file is empty
         if os.path.getsize(path) == 0:
-            print("There is no data in the file.")
+            print("File has empty data.")
+            return  # Exit the function early
+        
+        # Read the file and check for duplicates
+        seen_lines = set()
+        duplicate_lines = set()
+        with open(path, 'r') as file:
+            for line in file:
+                # Remove leading and trailing whitespaces and newlines
+                clean_line = line.strip()
+                if clean_line in seen_lines:
+                    duplicate_lines.add(clean_line)
+                else:
+                    seen_lines.add(clean_line)
+        
+        if duplicate_lines:
+            print(f"Duplicate rows found: {', '.join(duplicate_lines)}")
         else:
-            # Read the file and check for duplicates
-            seen_lines = set()
-            with open(path, 'r') as file:
-                for line in file:
-                    # Remove leading and trailing whitespaces and newlines
-                    clean_line = line.strip()
-                    if clean_line in seen_lines:
-                        print(f"Duplicate row found: '{clean_line}'")
-                        return
-                    else:
-                        seen_lines.add(clean_line)
             print("File does not have duplicate values.")
     else:
         print("File not found at the specified path.")
