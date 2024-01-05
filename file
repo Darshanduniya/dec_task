@@ -1,0 +1,4 @@
+command='/path/to/your/script2.py 
+$(echo "{{ task_instance.xcom_pull(task_ids=\'fetch_data_from_monetdb\') }}" | awk -F" " \'{print $1}\') 
+$(echo "{{ task_instance.xcom_pull(task_ids=\'fetch_data_from_monetdb\') }}" | awk -F" " \'{print $2}\') 
+$(echo "{{ task_instance.xcom_pull(task_ids=\'fetch_data_from_monetdb\') }}" | awk -F" " \'{print $3}\')',
